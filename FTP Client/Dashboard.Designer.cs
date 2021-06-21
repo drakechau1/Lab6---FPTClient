@@ -38,10 +38,10 @@ namespace FTP_Client
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelTools = new System.Windows.Forms.Panel();
+            this.buttonDeleteFile = new System.Windows.Forms.Button();
+            this.buttonUploadFile = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.panelListview = new System.Windows.Forms.Panel();
-            this.buttonUploadFile = new System.Windows.Forms.Button();
-            this.buttonDeleteFile = new System.Windows.Forms.Button();
             this.listviewListFile = new System.Windows.Forms.ListView();
             this.panelLogin.SuspendLayout();
             this.panelTools.SuspendLayout();
@@ -142,6 +142,26 @@ namespace FTP_Client
             this.panelTools.Size = new System.Drawing.Size(1213, 100);
             this.panelTools.TabIndex = 1;
             // 
+            // buttonDeleteFile
+            // 
+            this.buttonDeleteFile.Location = new System.Drawing.Point(220, 28);
+            this.buttonDeleteFile.Name = "buttonDeleteFile";
+            this.buttonDeleteFile.Size = new System.Drawing.Size(131, 44);
+            this.buttonDeleteFile.TabIndex = 1;
+            this.buttonDeleteFile.Text = "Delete";
+            this.buttonDeleteFile.UseVisualStyleBackColor = true;
+            this.buttonDeleteFile.Click += new System.EventHandler(this.buttonDeleteFile_Click);
+            // 
+            // buttonUploadFile
+            // 
+            this.buttonUploadFile.Location = new System.Drawing.Point(50, 28);
+            this.buttonUploadFile.Name = "buttonUploadFile";
+            this.buttonUploadFile.Size = new System.Drawing.Size(131, 44);
+            this.buttonUploadFile.TabIndex = 1;
+            this.buttonUploadFile.Text = "Upload";
+            this.buttonUploadFile.UseVisualStyleBackColor = true;
+            this.buttonUploadFile.Click += new System.EventHandler(this.buttonUploadFile_Click);
+            // 
             // buttonLogout
             // 
             this.buttonLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -168,24 +188,6 @@ namespace FTP_Client
             this.panelListview.Size = new System.Drawing.Size(1213, 419);
             this.panelListview.TabIndex = 2;
             // 
-            // buttonUploadFile
-            // 
-            this.buttonUploadFile.Location = new System.Drawing.Point(50, 28);
-            this.buttonUploadFile.Name = "buttonUploadFile";
-            this.buttonUploadFile.Size = new System.Drawing.Size(131, 44);
-            this.buttonUploadFile.TabIndex = 1;
-            this.buttonUploadFile.Text = "Upload";
-            this.buttonUploadFile.UseVisualStyleBackColor = true;
-            // 
-            // buttonDeleteFile
-            // 
-            this.buttonDeleteFile.Location = new System.Drawing.Point(220, 28);
-            this.buttonDeleteFile.Name = "buttonDeleteFile";
-            this.buttonDeleteFile.Size = new System.Drawing.Size(131, 44);
-            this.buttonDeleteFile.TabIndex = 1;
-            this.buttonDeleteFile.Text = "Delete";
-            this.buttonDeleteFile.UseVisualStyleBackColor = true;
-            // 
             // listviewListFile
             // 
             this.listviewListFile.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -195,6 +197,7 @@ namespace FTP_Client
             this.listviewListFile.Size = new System.Drawing.Size(1193, 409);
             this.listviewListFile.TabIndex = 0;
             this.listviewListFile.UseCompatibleStateImageBehavior = false;
+            this.listviewListFile.DoubleClick += new System.EventHandler(this.listviewListFile_DoubleClick);
             // 
             // Dashboard
             // 

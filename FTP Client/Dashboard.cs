@@ -70,5 +70,20 @@ namespace FTP_Client
             else
                 ActivateForm(true);
         }
+
+        private void buttonUploadFile_Click(object sender, EventArgs e)
+        {
+            /* Upload file feature */
+        }
+
+        private void buttonDeleteFile_Click(object sender, EventArgs e)
+        {
+            /* Delete file feature */
+        }
+
+        private void listviewListFile_DoubleClick(object sender, EventArgs e)
+        {
+            /* Download file feature */
+        }
     }
 }
