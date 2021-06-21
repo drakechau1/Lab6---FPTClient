@@ -72,7 +72,7 @@ namespace FTP_Client
             this.buttonLogin.Location = new System.Drawing.Point(220, 290);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(198, 44);
-            this.buttonLogin.TabIndex = 6;
+            this.buttonLogin.TabIndex = 4;
             this.buttonLogin.Text = "Login";
             this.buttonLogin.UseVisualStyleBackColor = false;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
@@ -82,7 +82,7 @@ namespace FTP_Client
             this.txtIPFTPServer.Location = new System.Drawing.Point(220, 138);
             this.txtIPFTPServer.Name = "txtIPFTPServer";
             this.txtIPFTPServer.Size = new System.Drawing.Size(766, 30);
-            this.txtIPFTPServer.TabIndex = 5;
+            this.txtIPFTPServer.TabIndex = 1;
             // 
             // label3
             // 
@@ -147,7 +147,7 @@ namespace FTP_Client
             this.buttonDeleteFile.Location = new System.Drawing.Point(220, 28);
             this.buttonDeleteFile.Name = "buttonDeleteFile";
             this.buttonDeleteFile.Size = new System.Drawing.Size(131, 44);
-            this.buttonDeleteFile.TabIndex = 1;
+            this.buttonDeleteFile.TabIndex = 2;
             this.buttonDeleteFile.Text = "Delete";
             this.buttonDeleteFile.UseVisualStyleBackColor = true;
             this.buttonDeleteFile.Click += new System.EventHandler(this.buttonDeleteFile_Click);
@@ -171,7 +171,7 @@ namespace FTP_Client
             this.buttonLogout.Location = new System.Drawing.Point(1046, 28);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(113, 44);
-            this.buttonLogout.TabIndex = 0;
+            this.buttonLogout.TabIndex = 3;
             this.buttonLogout.Text = "Logout";
             this.buttonLogout.UseVisualStyleBackColor = false;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
