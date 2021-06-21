@@ -62,14 +62,19 @@ namespace FTP_Client
                 panelLogin.Visible = false;
                 this.MinimumSize = currentSize;
                 this.ClientSize = currentSize;
+                this.MaximizeBox = true;
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+
             }
             else
             {
                 panelTools.Visible = false;
                 panelListview.Visible = false;
                 panelLogin.Visible = true;
+                this.MaximizeBox = false;
                 this.MinimumSize = new Size(panelLogin.Width, panelLogin.Height);
                 this.Size = new Size(panelLogin.Width, panelLogin.Height);
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
         }
 
