@@ -4,23 +4,54 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FTP_Client;
 
 namespace FTP_Client
 {
     public partial class Dashboard : Form
     {
-        //private const int MIN_HEIGHT_FORM = 1029;
-        //private const int MIN_WIDTH_FROM = 1231;
         Size currentSize;
+        FTP ftp;
+
+        string ipFTPServer;
+        string user;
+        string pass;
 
         public Dashboard()
         {
             InitializeComponent();
             currentSize = this.ClientSize;
+
+            txtIPFTPServer.Text = @"ftp://127.0.0.1/";
+            txtUsername.Text = "user1";
+            txtPassword.Text = "user1";
         }
+
+        #region Methods
+        private bool Connect2FTPServer(string host, string user, string pass)
+        {
+            bool isSuccess = true;
+            try
+            {
+                FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create(host);
+                ftpRequest.Credentials = new NetworkCredential(user, pass);
+                ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
+                FtpWebResponse ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+                //Console.WriteLine("status code: " + ftpResponse.StatusCode);
+                //Console.WriteLine("Description: " + ftpResponse.StatusDescription);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                isSuccess = false;
+            }
+            return isSuccess;
+        }
+        #endregion
 
         private void ActivateForm(bool flag)    // true: login, otherwise false
         {
@@ -59,7 +90,21 @@ namespace FTP_Client
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            ActivateForm(false);
+            ipFTPServer = txtIPFTPServer.Text;
+            user = txtUsername.Text;
+            pass = txtPassword.Text;
+
+            ftp = new FTP(ipFTPServer, user, pass);
+
+            if (Connect2FTPServer(ipFTPServer, user, pass))
+            {
+                ActivateForm(false);
+            }
+            else
+            {
+                MessageBox.Show("Login failed!" );
+            }
+            
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
