@@ -43,6 +43,7 @@ namespace FTP_Client
             this.buttonLogout = new System.Windows.Forms.Button();
             this.panelListview = new System.Windows.Forms.Panel();
             this.listviewListFile = new System.Windows.Forms.ListView();
+            this.buttonDownloadFile = new System.Windows.Forms.Button();
             this.panelLogin.SuspendLayout();
             this.panelTools.SuspendLayout();
             this.panelListview.SuspendLayout();
@@ -132,6 +133,7 @@ namespace FTP_Client
             // panelTools
             // 
             this.panelTools.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelTools.Controls.Add(this.buttonDownloadFile);
             this.panelTools.Controls.Add(this.buttonDeleteFile);
             this.panelTools.Controls.Add(this.buttonUploadFile);
             this.panelTools.Controls.Add(this.buttonLogout);
@@ -144,10 +146,10 @@ namespace FTP_Client
             // 
             // buttonDeleteFile
             // 
-            this.buttonDeleteFile.Location = new System.Drawing.Point(220, 28);
+            this.buttonDeleteFile.Location = new System.Drawing.Point(346, 28);
             this.buttonDeleteFile.Name = "buttonDeleteFile";
             this.buttonDeleteFile.Size = new System.Drawing.Size(131, 44);
-            this.buttonDeleteFile.TabIndex = 2;
+            this.buttonDeleteFile.TabIndex = 3;
             this.buttonDeleteFile.Text = "Delete";
             this.buttonDeleteFile.UseVisualStyleBackColor = true;
             this.buttonDeleteFile.Click += new System.EventHandler(this.buttonDeleteFile_Click);
@@ -171,7 +173,7 @@ namespace FTP_Client
             this.buttonLogout.Location = new System.Drawing.Point(1046, 28);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(113, 44);
-            this.buttonLogout.TabIndex = 3;
+            this.buttonLogout.TabIndex = 4;
             this.buttonLogout.Text = "Logout";
             this.buttonLogout.UseVisualStyleBackColor = false;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
@@ -198,6 +200,16 @@ namespace FTP_Client
             this.listviewListFile.TabIndex = 0;
             this.listviewListFile.UseCompatibleStateImageBehavior = false;
             this.listviewListFile.Click += new System.EventHandler(this.listviewListFile_Click);
+            // 
+            // buttonDownloadFile
+            // 
+            this.buttonDownloadFile.Location = new System.Drawing.Point(198, 28);
+            this.buttonDownloadFile.Name = "buttonDownloadFile";
+            this.buttonDownloadFile.Size = new System.Drawing.Size(131, 44);
+            this.buttonDownloadFile.TabIndex = 2;
+            this.buttonDownloadFile.Text = "Download";
+            this.buttonDownloadFile.UseVisualStyleBackColor = true;
+            this.buttonDownloadFile.Click += new System.EventHandler(this.buttonDownloadFile_Click);
             // 
             // Dashboard
             // 
@@ -236,6 +248,7 @@ namespace FTP_Client
         private System.Windows.Forms.Button buttonDeleteFile;
         private System.Windows.Forms.Button buttonUploadFile;
         private System.Windows.Forms.ListView listviewListFile;
+        private System.Windows.Forms.Button buttonDownloadFile;
     }
 }
 

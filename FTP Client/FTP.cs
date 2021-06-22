@@ -53,6 +53,11 @@ namespace FTP_Client
                     }
                 }
                 catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                /* Inform the status decription */
+                using (FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse())
+                {
+                    Console.WriteLine($"Download File Complete, status {response.StatusDescription}");
+                }
                 /* Resource Cleanup */
                 localFileStream.Close();
                 ftpStream.Close();

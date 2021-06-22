@@ -96,7 +96,7 @@ namespace FTP_Client
                 string fileExtension = Path.GetExtension(item).ToUpper();
                 string fileSize = ftp.getFileSize(item);
                 string fileModifiedDay = ftp.getFileCreatedDateTime(item);
-                ListViewItem lvItem = new ListViewItem(new string[] { fileName, fileModifiedDay, fileExtension, fileSize});
+                ListViewItem lvItem = new ListViewItem(new string[] { fileName, fileModifiedDay, fileExtension, fileSize });
                 listviewListFile.Items.Add(lvItem);
             }
         }
@@ -123,7 +123,7 @@ namespace FTP_Client
             }
             else
             {
-                MessageBox.Show("Login failed!" );
+                MessageBox.Show("Login failed!");
             }
         }
 
@@ -160,6 +160,25 @@ namespace FTP_Client
                 ftp.upload(Path.GetFileName(pathFile), pathFile);
                 RefreshFTPFileInfor("/");
             }
+        }
+
+        private void buttonDownloadFile_Click(object sender, EventArgs e)
+        {
+            /* Download file feature */
+            if (itemIndex == -1)
+                return;
+
+            string fileDownload = listviewListFile.Items[itemIndex].SubItems[0].Text;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = $"|*{Path.GetExtension(fileDownload)}";
+            saveFileDialog.FileName = fileDownload;
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != string.Empty)
+            {
+                ftp.download(fileDownload, saveFileDialog.FileName);
+            }
+
+            itemIndex = -1;
         }
 
         private void buttonDeleteFile_Click(object sender, EventArgs e)
