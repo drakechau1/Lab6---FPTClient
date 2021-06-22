@@ -140,19 +140,6 @@ namespace FTP_Client
                 ActivateForm(true);
         }
 
-        private long GetFileSize(string filename)
-        {
-            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(ipFTPServer + "/" + filename);
-            request.Proxy = null;
-            request.Credentials = new NetworkCredential(user, pass);
-            request.Method = WebRequestMethods.Ftp.GetFileSize;
-
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            long size = response.ContentLength;
-            response.Close();
-            return size;
-        }
-
         private void buttonUploadFile_Click(object sender, EventArgs e)
         {
             /* Upload file feature */
