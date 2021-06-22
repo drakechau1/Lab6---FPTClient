@@ -198,7 +198,6 @@ namespace FTP_Client
             this.listviewListFile.TabIndex = 0;
             this.listviewListFile.UseCompatibleStateImageBehavior = false;
             this.listviewListFile.Click += new System.EventHandler(this.listviewListFile_Click);
-            this.listviewListFile.DoubleClick += new System.EventHandler(this.listviewListFile_DoubleClick);
             // 
             // Dashboard
             // 

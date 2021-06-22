@@ -187,12 +187,6 @@ namespace FTP_Client
             itemIndex = -1;
         }
 
-        private void listviewListFile_DoubleClick(object sender, EventArgs e)
-        {
-            /* Download file feature */
-            Console.WriteLine("Download file");
-        }
-
         private void listviewListFile_Click(object sender, EventArgs e)
         {
             itemIndex = listviewListFile.SelectedItems[0].Index;
