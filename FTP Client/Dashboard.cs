@@ -43,8 +43,6 @@ namespace FTP_Client
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
                 FtpWebResponse ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                //Console.WriteLine("status code: " + ftpResponse.StatusCode);
-                //Console.WriteLine("Description: " + ftpResponse.StatusDescription);
             }
             catch (Exception ex)
             {
@@ -87,11 +85,10 @@ namespace FTP_Client
         }
         private void RefreshFTPFileInfor(string directory)
         {
+            listviewListFile.Items.Clear();
             fileNames = ftp.directoryListSimple(directory);
-
             foreach (var item in fileNames)
             {
-                Console.WriteLine(item);
                 string fileName = Path.GetFileName(item);
                 string fileExtension = Path.GetExtension(item).ToUpper();
                 string fileSize = ftp.getFileSize(item);
@@ -153,7 +150,15 @@ namespace FTP_Client
         {
             /* Upload file feature */
             Console.WriteLine("Upload file");
-            Console.WriteLine(ftp.getFileCreatedDateTime(fileNames[0]));
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.ShowDialog();
+            if (openFileDialog.FileName != string.Empty)
+            {
+                string pathFile = openFileDialog.FileName;
+                ftp.upload(Path.GetFileName(pathFile), pathFile);
+                Console.WriteLine("upload file successfully");
+                RefreshFTPFileInfor("/");
+            }
         }
 
         private void buttonDeleteFile_Click(object sender, EventArgs e)
