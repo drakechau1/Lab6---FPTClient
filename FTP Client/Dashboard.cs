@@ -22,6 +22,7 @@ namespace FTP_Client
         string user;
         string pass;
         string[] fileNames;
+        int itemIndex = -1;
 
         public Dashboard()
         {
@@ -164,13 +165,37 @@ namespace FTP_Client
         private void buttonDeleteFile_Click(object sender, EventArgs e)
         {
             /* Delete file feature */
-            Console.WriteLine("Delete file");
+            if (itemIndex == -1)
+                return;
+
+            string fileDelete = listviewListFile.Items[itemIndex].SubItems[0].Text;
+            DialogResult dialogResult = MessageBox.Show($"Do you want to delete file {fileDelete}", "Warning", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                try
+                {
+                    ftp.delete(fileDelete);
+                    Console.WriteLine($"Deleted file: {fileDelete}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return;
+                }
+                RefreshFTPFileInfor("/");
+            }
+            itemIndex = -1;
         }
 
         private void listviewListFile_DoubleClick(object sender, EventArgs e)
         {
             /* Download file feature */
             Console.WriteLine("Download file");
+        }
+
+        private void listviewListFile_Click(object sender, EventArgs e)
+        {
+            itemIndex = listviewListFile.SelectedItems[0].Index;
         }
     }
 }
