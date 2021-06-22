@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 
 namespace FTP_Client
 {
@@ -77,25 +78,25 @@ namespace FTP_Client
                 ftpRequest.KeepAlive = true;
                 /* Specify the Type of FTP Request */
                 ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
-                /* Establish Return Communication with the FTP Server */
-                ftpStream = ftpRequest.GetRequestStream();
-                /* Open a File Stream to Read the File for Upload */
-                FileStream localFileStream = new FileStream(localFile, FileMode.Create);
-                /* Buffer for the Downloaded Data */
-                byte[] byteBuffer = new byte[bufferSize];
-                int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-                /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
-                try
+
+                /* Copy the contents of the file to the request stream. */
+                byte[] fileContents;
+                using (StreamReader sourceStream = new StreamReader(localFile))
                 {
-                    while (bytesSent != 0)
-                    {
-                        ftpStream.Write(byteBuffer, 0, bytesSent);
-                        bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-                    }
+                    fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
                 }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-                /* Resource Cleanup */
-                localFileStream.Close();
+                /* Write the contents of the file to the request stream. */
+                ftpRequest.ContentLength = fileContents.Length;
+
+                using (Stream requestStream = ftpRequest.GetRequestStream())
+                {
+                    requestStream.Write(fileContents, 0, fileContents.Length);
+                }
+                /* Inform the status decription */
+                using (FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse())
+                {
+                    Console.WriteLine($"Upload File Complete, status {response.StatusDescription}");
+                }
                 ftpStream.Close();
                 ftpRequest = null;
             }
@@ -212,6 +213,7 @@ namespace FTP_Client
         /* Get the Size of a File */
         public string getFileSize(string fileName)
         {
+            /* Reference source: https://stackoverflow.com/questions/4175874/get-file-size-on-an-ftp-in-c-sharp */
             try
             {
                 /* Create an FTP Request */
@@ -320,13 +322,13 @@ namespace FTP_Client
         }
 
         // Check a directory is exist.
-        public bool DoesFtpDirectoryExist(string dirPath)
+        public bool DoesFtpDirectoryExist(string remoteFile)
         {
             bool isexist = false;
 
             try
             {
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(dirPath);
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(remoteFile);
                 request.Credentials = new NetworkCredential(user, pass);
                 request.Method = WebRequestMethods.Ftp.ListDirectory;
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
