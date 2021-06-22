@@ -87,6 +87,8 @@ namespace FTP_Client
         {
             listviewListFile.Items.Clear();
             fileNames = ftp.directoryListSimple(directory);
+            /* Remove the last element (null) from the string array */
+            fileNames = fileNames.Take(fileNames.Count() - 1).ToArray();
             foreach (var item in fileNames)
             {
                 string fileName = Path.GetFileName(item);
@@ -149,14 +151,12 @@ namespace FTP_Client
         private void buttonUploadFile_Click(object sender, EventArgs e)
         {
             /* Upload file feature */
-            Console.WriteLine("Upload file");
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
             if (openFileDialog.FileName != string.Empty)
             {
                 string pathFile = openFileDialog.FileName;
                 ftp.upload(Path.GetFileName(pathFile), pathFile);
-                Console.WriteLine("upload file successfully");
                 RefreshFTPFileInfor("/");
             }
         }
