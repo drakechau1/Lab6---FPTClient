@@ -38,12 +38,14 @@ namespace FTP_Client
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelTools = new System.Windows.Forms.Panel();
+            this.buttonDownloadFile = new System.Windows.Forms.Button();
             this.buttonDeleteFile = new System.Windows.Forms.Button();
             this.buttonUploadFile = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.panelListview = new System.Windows.Forms.Panel();
             this.listviewListFile = new System.Windows.Forms.ListView();
-            this.buttonDownloadFile = new System.Windows.Forms.Button();
+            this.labelTotal = new System.Windows.Forms.Label();
+            this.labelSize = new System.Windows.Forms.Label();
             this.panelLogin.SuspendLayout();
             this.panelTools.SuspendLayout();
             this.panelListview.SuspendLayout();
@@ -101,6 +103,7 @@ namespace FTP_Client
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(321, 30);
             this.txtPassword.TabIndex = 3;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // txtUsername
             // 
@@ -133,6 +136,8 @@ namespace FTP_Client
             // panelTools
             // 
             this.panelTools.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelTools.Controls.Add(this.labelSize);
+            this.panelTools.Controls.Add(this.labelTotal);
             this.panelTools.Controls.Add(this.buttonDownloadFile);
             this.panelTools.Controls.Add(this.buttonDeleteFile);
             this.panelTools.Controls.Add(this.buttonUploadFile);
@@ -143,6 +148,16 @@ namespace FTP_Client
             this.panelTools.Name = "panelTools";
             this.panelTools.Size = new System.Drawing.Size(1213, 100);
             this.panelTools.TabIndex = 1;
+            // 
+            // buttonDownloadFile
+            // 
+            this.buttonDownloadFile.Location = new System.Drawing.Point(198, 28);
+            this.buttonDownloadFile.Name = "buttonDownloadFile";
+            this.buttonDownloadFile.Size = new System.Drawing.Size(131, 44);
+            this.buttonDownloadFile.TabIndex = 2;
+            this.buttonDownloadFile.Text = "Download";
+            this.buttonDownloadFile.UseVisualStyleBackColor = true;
+            this.buttonDownloadFile.Click += new System.EventHandler(this.buttonDownloadFile_Click);
             // 
             // buttonDeleteFile
             // 
@@ -193,23 +208,33 @@ namespace FTP_Client
             // listviewListFile
             // 
             this.listviewListFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listviewListFile.FullRowSelect = true;
             this.listviewListFile.HideSelection = false;
             this.listviewListFile.Location = new System.Drawing.Point(10, 0);
+            this.listviewListFile.MultiSelect = false;
             this.listviewListFile.Name = "listviewListFile";
             this.listviewListFile.Size = new System.Drawing.Size(1193, 409);
             this.listviewListFile.TabIndex = 0;
             this.listviewListFile.UseCompatibleStateImageBehavior = false;
             this.listviewListFile.Click += new System.EventHandler(this.listviewListFile_Click);
             // 
-            // buttonDownloadFile
+            // labelTotal
             // 
-            this.buttonDownloadFile.Location = new System.Drawing.Point(198, 28);
-            this.buttonDownloadFile.Name = "buttonDownloadFile";
-            this.buttonDownloadFile.Size = new System.Drawing.Size(131, 44);
-            this.buttonDownloadFile.TabIndex = 2;
-            this.buttonDownloadFile.Text = "Download";
-            this.buttonDownloadFile.UseVisualStyleBackColor = true;
-            this.buttonDownloadFile.Click += new System.EventHandler(this.buttonDownloadFile_Click);
+            this.labelTotal.AutoSize = true;
+            this.labelTotal.Location = new System.Drawing.Point(524, 38);
+            this.labelTotal.Name = "labelTotal";
+            this.labelTotal.Size = new System.Drawing.Size(62, 25);
+            this.labelTotal.TabIndex = 5;
+            this.labelTotal.Text = "Total:";
+            // 
+            // labelSize
+            // 
+            this.labelSize.AutoSize = true;
+            this.labelSize.Location = new System.Drawing.Point(676, 38);
+            this.labelSize.Name = "labelSize";
+            this.labelSize.Size = new System.Drawing.Size(57, 25);
+            this.labelSize.TabIndex = 5;
+            this.labelSize.Text = "Size:";
             // 
             // Dashboard
             // 
@@ -227,6 +252,7 @@ namespace FTP_Client
             this.panelLogin.ResumeLayout(false);
             this.panelLogin.PerformLayout();
             this.panelTools.ResumeLayout(false);
+            this.panelTools.PerformLayout();
             this.panelListview.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -249,6 +275,8 @@ namespace FTP_Client
         private System.Windows.Forms.Button buttonUploadFile;
         private System.Windows.Forms.ListView listviewListFile;
         private System.Windows.Forms.Button buttonDownloadFile;
+        private System.Windows.Forms.Label labelSize;
+        private System.Windows.Forms.Label labelTotal;
     }
 }
 

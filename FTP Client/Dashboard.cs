@@ -90,15 +90,19 @@ namespace FTP_Client
             fileNames = ftp.directoryListSimple(directory);
             /* Remove the last element (null) from the string array */
             fileNames = fileNames.Take(fileNames.Count() - 1).ToArray();
+            long totalSize = 0;
             foreach (var item in fileNames)
             {
                 string fileName = Path.GetFileName(item);
                 string fileExtension = Path.GetExtension(item).ToUpper();
                 string fileSize = ftp.getFileSize(item);
+                totalSize += long.Parse(fileSize);
                 string fileModifiedDay = ftp.getFileCreatedDateTime(item);
                 ListViewItem lvItem = new ListViewItem(new string[] { fileName, fileModifiedDay, fileExtension, fileSize });
                 listviewListFile.Items.Add(lvItem);
             }
+            labelTotal.Text = $"Total: {fileNames.Length.ToString()}";
+            labelSize.Text = $"Size: {totalSize.ToString()}";
         }
         #endregion
 
@@ -153,12 +157,14 @@ namespace FTP_Client
         {
             /* Upload file feature */
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-            if (openFileDialog.FileName != string.Empty)
+            if (openFileDialog.ShowDialog() != DialogResult.Cancel)
             {
-                string pathFile = openFileDialog.FileName;
-                ftp.upload(Path.GetFileName(pathFile), pathFile);
-                RefreshFTPFileInfor("/");
+                if (openFileDialog.FileName != string.Empty)
+                {
+                    string pathFile = openFileDialog.FileName;
+                    ftp.upload(Path.GetFileName(pathFile), pathFile);
+                    RefreshFTPFileInfor("/");
+                }
             }
         }
 
@@ -172,12 +178,21 @@ namespace FTP_Client
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = $"|*{Path.GetExtension(fileDownload)}";
             saveFileDialog.FileName = fileDownload;
-            saveFileDialog.ShowDialog();
-            if (saveFileDialog.FileName != string.Empty)
+            if (saveFileDialog.ShowDialog() != DialogResult.Cancel)
             {
-                ftp.download(fileDownload, saveFileDialog.FileName);
+                if (saveFileDialog.FileName != string.Empty)
+                {
+                    try
+                    {
+                        ftp.download(fileDownload, saveFileDialog.FileName);
+                        MessageBox.Show("Download file compelted");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
             }
-
             itemIndex = -1;
         }
 
@@ -194,14 +209,12 @@ namespace FTP_Client
                 try
                 {
                     ftp.delete(fileDelete);
-                    Console.WriteLine($"Deleted file: {fileDelete}");
+                    RefreshFTPFileInfor("/");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    return;
                 }
-                RefreshFTPFileInfor("/");
             }
             itemIndex = -1;
         }
