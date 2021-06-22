@@ -197,18 +197,8 @@ namespace FTP_Client
                 ftpRequest.Method = WebRequestMethods.Ftp.GetDateTimestamp;
                 /* Establish Return Communication with the FTP Server */
                 ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                /* Establish Return Communication with the FTP Server */
-                ftpStream = ftpResponse.GetResponseStream();
-                /* Get the FTP Server's Response Stream */
-                StreamReader ftpReader = new StreamReader(ftpStream);
-                /* Store the Raw Response */
-                string fileInfo = null;
-                /* Read the Full Response Stream */
-                try { fileInfo = ftpReader.ReadToEnd(); }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-                /* Resource Cleanup */
-                ftpReader.Close();
-                ftpStream.Close();
+                string fileInfo = ftpResponse.LastModified.ToString();
+
                 ftpResponse.Close();
                 ftpRequest = null;
                 /* Return File Created Date Time */
@@ -228,7 +218,7 @@ namespace FTP_Client
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + fileName);
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
-                /* When in doubt, use these options */
+                ///* When in doubt, use these options */
                 ftpRequest.UseBinary = true;
                 ftpRequest.UsePassive = true;
                 ftpRequest.KeepAlive = true;
@@ -236,18 +226,9 @@ namespace FTP_Client
                 ftpRequest.Method = WebRequestMethods.Ftp.GetFileSize;
                 /* Establish Return Communication with the FTP Server */
                 ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                /* Establish Return Communication with the FTP Server */
-                ftpStream = ftpResponse.GetResponseStream();
-                /* Get the FTP Server's Response Stream */
-                StreamReader ftpReader = new StreamReader(ftpStream);
-                /* Store the Raw Response */
-                string fileInfo = null;
-                /* Read the Full Response Stream */
-                try { while (ftpReader.Peek() != -1) { fileInfo = ftpReader.ReadToEnd(); } }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-                /* Resource Cleanup */
-                ftpReader.Close();
-                ftpStream.Close();
+                /* Get the length of the data received from the FTP server */
+                string fileInfo = ftpResponse.ContentLength.ToString();
+
                 ftpResponse.Close();
                 ftpRequest = null;
                 /* Return File Size */
@@ -255,7 +236,7 @@ namespace FTP_Client
             }
             catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             /* Return an Empty string Array if an Exception Occurs */
-            return "";
+            return null;
         }
 
         /* List Directory Contents File/Folder Name Only */

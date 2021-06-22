@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FTP_Client;
+using System.IO;
 
 namespace FTP_Client
 {
@@ -20,6 +21,7 @@ namespace FTP_Client
         string ipFTPServer;
         string user;
         string pass;
+        string[] fileNames;
 
         public Dashboard()
         {
@@ -51,8 +53,6 @@ namespace FTP_Client
             }
             return isSuccess;
         }
-        #endregion
-
         private void ActivateForm(bool flag)    // true: login, otherwise false
         {
             if (!flag)
@@ -77,8 +77,7 @@ namespace FTP_Client
                 this.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
         }
-
-        private void AvtivateListView()
+        private void InitializeListView()
         {
             listviewListFile.Columns.Add("Name", 300);
             listviewListFile.Columns.Add("Date modified", 200);
@@ -86,11 +85,27 @@ namespace FTP_Client
             listviewListFile.Columns.Add("Size", 100);
             listviewListFile.View = View.Details;
         }
+        private void RefreshFTPFileInfor(string directory)
+        {
+            fileNames = ftp.directoryListSimple(directory);
+
+            foreach (var item in fileNames)
+            {
+                Console.WriteLine(item);
+                string fileName = Path.GetFileName(item);
+                string fileExtension = Path.GetExtension(item).ToUpper();
+                string fileSize = ftp.getFileSize(item);
+                string fileModifiedDay = ftp.getFileCreatedDateTime(item);
+                ListViewItem lvItem = new ListViewItem(new string[] { fileName, fileModifiedDay, fileExtension, fileSize});
+                listviewListFile.Items.Add(lvItem);
+            }
+        }
+        #endregion
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
             ActivateForm(true);
-            AvtivateListView();
+            InitializeListView();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -104,12 +119,12 @@ namespace FTP_Client
             if (Connect2FTPServer(ipFTPServer, user, pass))
             {
                 ActivateForm(false);
+                RefreshFTPFileInfor("/");
             }
             else
             {
                 MessageBox.Show("Login failed!" );
             }
-            
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -121,19 +136,36 @@ namespace FTP_Client
                 ActivateForm(true);
         }
 
+        private long GetFileSize(string filename)
+        {
+            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(ipFTPServer + "/" + filename);
+            request.Proxy = null;
+            request.Credentials = new NetworkCredential(user, pass);
+            request.Method = WebRequestMethods.Ftp.GetFileSize;
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            long size = response.ContentLength;
+            response.Close();
+            return size;
+        }
+
         private void buttonUploadFile_Click(object sender, EventArgs e)
         {
             /* Upload file feature */
+            Console.WriteLine("Upload file");
+            Console.WriteLine(ftp.getFileCreatedDateTime(fileNames[0]));
         }
 
         private void buttonDeleteFile_Click(object sender, EventArgs e)
         {
             /* Delete file feature */
+            Console.WriteLine("Delete file");
         }
 
         private void listviewListFile_DoubleClick(object sender, EventArgs e)
         {
             /* Download file feature */
+            Console.WriteLine("Download file");
         }
     }
 }
